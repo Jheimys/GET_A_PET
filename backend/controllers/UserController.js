@@ -153,6 +153,93 @@ module.exports = class UserController {
         res.status(200).json({ user })
     }
 
+/*      static async editUser(req, res) {
+
+        const id = req.params.id
+
+        //check if user exists
+        const token = getToken(req)
+        const reqUser = await getUserByToken(token)
+        const user = await User.findById(id);// retorna um doc usuário
+        
+        if (!user) return res.status(201).send({});
+
+        console.log('user to update', user)
+        console.log('data from body', req.body)
+
+        const{ name, email, phone, password, confirmpassword } = req.body
+
+        let image = ''
+
+        //Validations
+        
+        if(!name){
+            res.status(422).json({message: 'O nome é obrigatório'})
+            return
+        }
+
+        user.name = name
+
+        if(!email){
+            res.status(422).json({message: 'O email é obrigatório'})
+            return
+        }
+
+        
+        const userExists = await User.find({email: email})
+        // user.email => tiago2@email
+        // diferente de
+        // email => tiago2@email
+        console.log("user.email !== email", user.email, "!==", email, user.email !== email)
+        // garantir que não é atualizado o email do usuário
+        if(user.email !== email && userExists.length > 0) {
+            res.status(422).json({ message: 'Por favor, utilize outro email!'})
+            return
+        }
+
+        user.email = email
+
+        if(!phone){
+            res.status(422).json({message: 'O telefone é obrigatório'})
+            return
+        }
+
+        user.phone = phone
+
+        if(password != confirmpassword) {
+            res.status(422).json({ message: 'As senhas não conferem!'})
+            return
+
+        } else if( password === confirmpassword && password != null ) {
+            //creating password
+            const salt = await bcrypt.genSalt(12)
+            const passwordHash = await bcrypt.hash(password, salt)
+
+            user.password = passwordHash
+        }
+
+        try {
+            
+            await User.findOneAndUpdate(
+                {_id: user._id},
+                {$set: reqUser},
+                { new: true },
+            )
+
+            res.status(200).json({
+                message: 'Usuário atualizado com sucesso!'
+            })
+
+        } catch (error) {
+            res.status(500).json({ message: error})
+            return
+        }
+        
+    } 
+ */
+   
+   
+   
     static async editUser(req, res) {
 
         const id = req.params.id
@@ -167,26 +254,26 @@ module.exports = class UserController {
         let image = ''
 
         //Validations
-        
         if(!name){
             res.status(422).json({message: 'O nome é obrigatório'})
             return
         }
+
+        user.name = name
 
         if(!email){
             res.status(422).json({message: 'O email é obrigatório'})
             return
         }
 
-        
         const userExists = await User.findOne({email: email})
 
-        if(user.email !== email && userExists) {
-        res.status(422).json({
-            message: 'Por favor, utilize outro email!'
-        })
+        console.log('email:', userExists)
+        console.log('Email do usuário:', user.email)
 
-        return
+        if(user.email !== email && userExists) {
+            res.status(422).json({ message: 'Por favor, utilize outro email!'})
+            return
         }
 
         user.email = email
@@ -196,15 +283,36 @@ module.exports = class UserController {
             return
         }
 
-        if(!password){
-            res.status(422).json({message: 'A senha é obrigatório'})
+        user.phone = phone
+
+        if(password != confirmpassword) {
+            res.status(422).json({ message: 'As senhas não conferem!'})
             return
+
+        } else if( password === confirmpassword && password != null ) {
+            //creating password
+            const salt = await bcrypt.genSalt(12)
+            const passwordHash = await bcrypt.hash(password, salt)
+
+            user.password = passwordHash
         }
 
-        if(!confirmpassword){
-            res.status(422).json({message: 'A confirmação da senha é obrigatório'})
-            return
+        try {
+            
+            await User.findOneAndUpdate(
+                {_id: user._id},
+                {$set: user},
+                { new: true },
+            )
+
+            res.status(200).json({
+                message: 'Usuário atualizado com sucesso!'
+            })
+
+        } catch (error) {
+           res.status(500).json({ message: error})
+           return
         }
         
-    }
+    } 
 }
