@@ -2,6 +2,8 @@ const express = require('express')
 const cors = require('cors')
 
 const userRoutes = require('./routes/userRouter')
+const PetRoutes = require('./routes/PetRoutes')
+
 
 const app = express()
 
@@ -16,5 +18,7 @@ app.use(express.static('public'))
 
 //Routes
 app.use('/users', userRoutes)
+app.use('/pets', PetRoutes)
+
 
 app.listen(5000)
