@@ -120,15 +120,22 @@ module.exports = class UserController {
 
         if(req.headers.authorization){
 
-            const token = getToken(req) // por que passou o req?
+            const token = getToken(req) 
             const decoded = jwt.verify(token, 'nossosecret')
 
-            currentUser = await User.findById(decoded.id)
+            currentUser = await User.findById(decoded.id) 
 
             currentUser.password = undefined
 
+            console.log('token:', token)
+            console.log('decoded:', decoded)
+            console.log('currenteUser:', currentUser)
+            console.log('current.password:', currentUser.password)
+
         } else {
+
             currentUser = null
+            
         }
 
         res.status(200).send(currentUser)
@@ -251,7 +258,10 @@ module.exports = class UserController {
 
         const{ name, email, phone, password, confirmpassword } = req.body
 
-        let image = ''
+
+        if (req.file) {
+            user.image = req.file.filename
+        }
 
         //Validations
         if(!name){
@@ -268,8 +278,8 @@ module.exports = class UserController {
 
         const userExists = await User.findOne({email: email})
 
-        console.log('email:', userExists)
-        console.log('Email do usuário:', user.email)
+        //console.log('email:', userExists)
+        //console.log('Email do usuário:', user.email)
 
         if(user.email !== email && userExists) {
             res.status(422).json({ message: 'Por favor, utilize outro email!'})
@@ -284,6 +294,8 @@ module.exports = class UserController {
         }
 
         user.phone = phone
+
+
 
         if(password != confirmpassword) {
             res.status(422).json({ message: 'As senhas não conferem!'})
