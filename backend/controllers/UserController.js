@@ -116,7 +116,8 @@ module.exports = class UserController {
     static async checkUser(req, res) {
         let currentUser
 
-        console.log(req.headers.authorization)
+        //console.log(req.headers.authorization)
+        
 
         if(req.headers.authorization){
 
@@ -127,10 +128,10 @@ module.exports = class UserController {
 
             currentUser.password = undefined
 
-            console.log('token:', token)
+          /*console.log('token:', token)
             console.log('decoded:', decoded)
             console.log('currenteUser:', currentUser)
-            console.log('current.password:', currentUser.password)
+            console.log('current.password:', currentUser.password) */
 
         } else {
 
