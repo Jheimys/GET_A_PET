@@ -10,7 +10,7 @@ module.exports = class Petcontroller {
     static async create(req, res) {
         const { name, age, weight, color } = req.body
 
-        const images = req.files
+        const images = req.files               // As imagens vem por files e não pelo body.
 
         const available = true
 
@@ -37,9 +37,8 @@ module.exports = class Petcontroller {
             return
         }
 
-
-       // console.log(images) --> Está chegando um array vazio
-
+        // As images vem como array.
+        // console.log(images) --> Está chegando um array vazio
         if(images.length === 0 ) {
             res.status(422).json({message: 'A imagem é obrigatória!'})
             return
@@ -83,5 +82,17 @@ module.exports = class Petcontroller {
         } catch (error) {
             res.status(500).json({message: error})
         }
+    }
+
+    //viewing the pets
+    static async getAll(req, res) {
+
+        //O método sort('-createdAt') ordena do mais recente p/ o mais antigo.
+        // O createdAt está no BD por que definir no models timestamps: true.
+        const pets = await Pet.find().sort('-createdAt')
+
+        res.status(200).json({
+            pets: pets,
+        })
     }
 }
