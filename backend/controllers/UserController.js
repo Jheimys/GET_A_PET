@@ -246,8 +246,7 @@ module.exports = class UserController {
     } 
  */
    
-   
-   
+    
     static async editUser(req, res) {
 
         const id = req.params.id
