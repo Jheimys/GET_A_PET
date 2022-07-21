@@ -28,7 +28,7 @@ const User = mongoose.model(
             required: true
         }   
     }, 
-        { timestamps: true },
+        { timestamps: true },  //Cria os campos: createdAt e updatedAt
     )
 )
 

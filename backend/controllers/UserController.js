@@ -118,14 +118,14 @@ module.exports = class UserController {
 
         //console.log(req.headers.authorization)
         
-
-        if(req.headers.authorization){
+        if(req.headers.authorization){ //req.headers.authorization --> Postman
 
             const token = getToken(req) 
             const decoded = jwt.verify(token, 'nossosecret')
 
             currentUser = await User.findById(decoded.id) 
 
+            //Como vamos enviar o usuário retiramos a senha.
             currentUser.password = undefined
 
           /*console.log('token:', token)
@@ -139,6 +139,7 @@ module.exports = class UserController {
             
         }
 
+        //Retorna todos os dados do usuário, menos o password.
         res.status(200).send(currentUser)
     }
 

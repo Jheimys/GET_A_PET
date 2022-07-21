@@ -10,3 +10,14 @@
  "multer": "^1.4.5-lts.1",
  "nodemon": "^2.0.19"
 ```
+
+# 2.Função login (Método post)
+
+###Validações:
+
+- Verificar se o email foi digitado.
+- verificar se a senha foi digitada.
+- Verificar se o email já existe.
+- verificar se a senha cadastrada é igual a digitada.
+
+Estudar a aula 247

@@ -29,7 +29,7 @@ const Pet = mongoose.model(
             required: true 
         },
 
-        available: {
+        available: {        // É o status do pet --> adotado ou não.
             type: Boolean,
         },
 
