@@ -8,26 +8,29 @@ import Footer from './components/layout/Footer'
 import Login from './components/pages/Auth/Login'
 import Register from './components/pages/Auth/Register'
 import Home from './components/pages/Home'
+import Container from './components/layout/Container'
 
 function App() {
   return (
    <Router>
+      <Navbar />
 
-    <Navbar />
+      <Container>
 
-    <Routes>
+        <Routes>
 
-      <Route path="/login" element={<Login />} />
-          
-      <Route path="/register" element={<Register /> } />
-            
-      <Route path='/' exact element={<Home />} />
+          <Route path="/login" element={<Login />} />
+                
+          <Route path="/register" element={<Register /> } />
+                  
+          <Route path='/' exact element={<Home />} />
 
-      </Routes>
+        </Routes>
 
-    <Footer />
-
-   </Router>
+      </Container>
+      
+      <Footer />
+    </Router>
 
   );
 }
