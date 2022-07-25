@@ -10,26 +10,34 @@ import Register from './components/pages/Auth/Register'
 import Home from './components/pages/Home'
 import Container from './components/layout/Container'
 
+/* Context */
+import { UserProvider } from './context/UserContext'
+
 function App() {
   return (
    <Router>
-      <Navbar />
 
-      <Container>
+      <UserProvider>
+        <Navbar />
 
-        <Routes>
+        <Container>
 
-          <Route path="/login" element={<Login />} />
-                
-          <Route path="/register" element={<Register /> } />
+          <Routes>
+
+            <Route path="/login" element={<Login />} />
                   
-          <Route path='/' exact element={<Home />} />
+            <Route path="/register" element={<Register /> } />
+                    
+            <Route path='/' exact element={<Home />} />
 
-        </Routes>
+          </Routes>
 
-      </Container>
+        </Container>
+        
+        <Footer />
+
+      </UserProvider>
       
-      <Footer />
     </Router>
 
   );
