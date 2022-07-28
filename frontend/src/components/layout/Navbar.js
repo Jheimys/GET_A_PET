@@ -11,7 +11,9 @@ import {Context} from '../../context/UserContext'
 
 function Navbar(){
 
-    const { authenticated } = useContext(Context)
+    const res = useContext(Context)
+    const { authenticadet, logout } = useContext(Context)
+    console.log(res, authenticadet)
 
     return(
 
@@ -27,10 +29,9 @@ function Navbar(){
                     <Link to="/">Adotar</Link>
                 </li>
                 
-                {authenticated ? (  
+                {authenticadet ? (  
                     <> 
-                        <p> Logado </p>
-
+                        <li onClick={logout}> Sair </li>
                     </> 
                 ):(
                     <>
